@@ -1,7 +1,7 @@
 // ============================================================
 // products.js
 //  name: name of item being sold
-//  price: your actual price int
+//  price: TBD (45 was an estimate)
 //  image: path to image
 //  description: Vintage T or message from oscar
 //   stripeLink: TBD

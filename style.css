@@ -1,0 +1,36 @@
+/* Font
+   TODO: Replace @import with Google Font
+   or use @font-face below to load a local .woff2 file.
+   Current font: "Space Grotesk" (display) + "Inter" (body)
+   To use your own file:
+     @font-face {
+       font-family: 'YourFont';
+       src: url('fonts/yourfont.woff2') format('woff2');
+       font-weight: 400 700;
+       font-display: swap;
+     }
+*/
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+
+/* Token
+   TODO: These are default until oscar can get me some font ideas and logo.
+*/
+:root {
+  --bg:          #0a0a0a;       /* page background */
+  --surface:     #111111;       /* card/panel background */
+  --surface-2:   #1a1a1a;       /* hover / elevated surface */
+  --border:      #222222;       /* subtle border color */
+  --text:        #f0f0f0;       /* primary text */
+  --text-muted:  #666666;       /* secondary / label text */
+  --accent:      #ffffff;       /* your brand accent color*/
+  --accent-dark: #b8cc1a;       /* darker accent for hover states */
+  --danger:      #ff4444;       /* sold out / error red*/
+
+  --font-display: 'Space Grotesk', sans-serif; /* your display font */
+  --font-body:    'Inter', sans-serif;          /* your body font */
+
+  --radius:    4px;
+  --radius-lg: 8px;
+  --transition: 0.2s ease;
+  --max-width: 1280px;
+}

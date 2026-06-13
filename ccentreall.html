@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>CCENTREALL</title>
+  <!--TODO: Message-->
+  <meta name="description" content="msg" />
+ 
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- TODO: Work on navigation -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="ccentreall.html" class="nav-logo">CCENTREALL<span></span></a>
+ 
+      <ul class="nav-links">
+        <li><a href="ccentreall.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+      </ul>
+ 
+      <div class="nav-right">
+        <a href="cart.html" class="cart-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Cart
+          <span id="cart-count">0</span>
+        </a>
+        <button class="nav-hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+ 
+  <!-- Hero/Front -->
+  <section class="hero">
+
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="video/someshit.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay">
+    <div class="container">
+      <div class="hero-content">
+        <h1>CCENTREALL</h1>
+
+        <p class="hero-sub">
+          One T. One drop. Vintage distressed T.
+        </p>
+
+        <div class="hero-actions">
+          <a href="shop.html" class="btn btn-primary">Shop the Drop</a>
+          <a href="#about" class="btn btn-outline">Our Story</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unsure if oscar wants this on the front end, still added it to see what he thinks
+  </section> 
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Featured Drops</h2>
+        <a href="shop.html" class="btn btn-ghost">View All →</a>
+      </div>
+
+      <div class="product-grid" id="featured-grid"></div>
+    </div>
+  </section>
+
+
+  </section>  
+  <section class="about-strip section" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div>
+          <p class="about-label">About the Brand</p>
+          <h2 class="about-title">Made with<br />intention.</h2>
+        </div>
+        <div>
+          <p class="about-text">
+            3 friends created this brand with a hope to insipre all and give back to
+            their friend group. All started from dreams to ideas. First drop consist of a 
+            inside out vintage distressed T.
+          </p>
+          <a href="https://www.instagram.com/ccentreall/" target="_blank" class="btn btn-outline" style="margin-top:28px;display:inline-flex;">
+            Follow on Instagram →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  -->
+
+  </section>
+  <!-- Bottom pages of ccentreall -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">CCENTREALL<span style="color:var(--accent)"></span></p>
+          <p class="footer-tagline">
+            <!--TODO: Add message-->
+            Add msg<br />
+            add msg.
+          </p>
+        </div>
+        <div>
+          <p class="footer-col-title">Shop</p>
+          <ul class="footer-links">
+            <li><a href="shop.html">All Tees</a></li>
+            <li><a href="shop.html?filter=limited">Limited Drops</a></li>
+          <!-- save for later with newer releases  <li><a href="shop.html?filter=blank">Blanks</a></li> -->
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Connect</p>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/ccentreall/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@orslorsl/">TikTok</a></li>
+            <!-- Add company email domain -->
+            <li><a href="oscar@ccentreall.com">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 CCENTREALL. All rights reserved.</p>
+        <p>Designed by ongjawn.</p>
+      </div>
+    </div>
+  </footer>
+  </section>
+
+  <div id="cart-toast"></div>
+ 
+  <!-- SCRIPTS -->
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    // Render featured products
+    const featuredGrid = document.getElementById("featured-grid");
+    const featured = products.slice(0, 4); // Allows which products appear featured
+ 
+    featured.forEach(p => {
+      featuredGrid.innerHTML += `
+        <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
+          <div class="card-img-wrap">
+            <img src="${p.image}" alt="${p.name}" onerror="this.style.background='#1a1a1a';this.style.display='block';this.style.height='100%'" />
+            <span class="card-tag ${p.tag}">${p.tag}</span>
+            ${p.soldOut ? `<div class="card-sold-overlay">Sold Out</div>` : ''}
+          </div>
+          <div class="card-body">
+            <p class="card-name">${p.name}</p>
+            <p class="card-desc">${p.description}</p>
+            <p class="card-price">$${p.price}</p>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
+ 

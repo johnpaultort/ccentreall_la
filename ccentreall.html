@@ -144,9 +144,8 @@
   <script src="products.js"></script>
   <script src="cart.js"></script>
   <script>
-    // Render featured products
     const featuredGrid = document.getElementById("featured-grid");
-    const featured = products.slice(0, 4); // Allows which products appear featured
+    const featured = products.slice(0, 4);
  
     featured.forEach(p => {
       featuredGrid.innerHTML += `

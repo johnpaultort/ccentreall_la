@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — CCENTREALL</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">CCENTREALL<span></span></a>
+      <ul class="nav-links">
+        <li><a href="ccentreall.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="cart.html" class="cart-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Cart
+          <span id="cart-count">0</span>
+        </a>
+        <button class="nav-hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="container">
+    <div class="page-header">
+      <h1>Drop</h1>
+      <p>1 Piece. inside out distressed t</p>
+    </div>
+  </div>
+
+  <!-- SHOP SECTION -->
+  <section class="section-sm">
+    <div class="container">
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="limited">Limited</button>
+      <!--  <button class="filter-btn" data-filter="blank">Blanks</button> -->
+      </div>
+
+      <!-- PRODUCT GRID — populated by JS -->
+      <div class="product-grid" id="shop-grid"></div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <!-- TODO: Add MSG -->
+          <p class="footer-brand">CCENTREALL<span style="color:var(--accent)"></span></p>
+          <p class="footer-tagline">MSG</p>
+        </div>
+        <div>
+          <p class="footer-col-title">Shop</p>
+          <ul class="footer-links">
+            <li><a href="shop.html">All Tees</a></li>
+            <li><a href="shop.html?filter=limited">Limited Drops</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Connect</p>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/ccentreall/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@orslorsl/video/7650570852961881357?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a></li>
+            <li><a href="oscar@ccentreall">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 CCENTREALL. All rights reserved.</p>
+        <p>Designed & built independently.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cart-toast"></div>
+
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    const grid = document.getElementById("shop-grid");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    let activeFilter = "all";
+
+    // Check URL for filter param (e.g. shop.html?filter=limited)
+    const urlFilter = new URLSearchParams(window.location.search).get("filter");
+    if (urlFilter) activeFilter = urlFilter;
+
+    function renderProducts(filter) {
+      const filtered = filter === "all" ? products : products.filter(p => p.tag === filter);
+      grid.innerHTML = "";
+      filtered.forEach(p => {
+        grid.innerHTML += `
+          <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
+            <div class="card-img-wrap">
+              <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'" />
+              <span class="card-tag ${p.tag}">${p.tag}</span>
+              ${p.soldOut ? `<div class="card-sold-overlay">Sold Out</div>` : ''}
+            </div>
+            <div class="card-body">
+              <p class="card-name">${p.name}</p>
+              <p class="card-desc">${p.description}</p>
+              <p class="card-price">$${p.price}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    filterBtns.forEach(btn => {
+      if (btn.dataset.filter === activeFilter) btn.classList.add("active");
+      else btn.classList.remove("active");
+
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.dataset.filter;
+        renderProducts(activeFilter);
+      });
+    });
+
+    renderProducts(activeFilter);
+  </script>
+</body>
+</html>

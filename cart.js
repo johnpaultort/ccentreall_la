@@ -1,10 +1,7 @@
-// ============================================================
-// cart.js — handles all cart logic via localStorage
-// ============================================================
+// cart.js
+// handles all cart logic via localStorage
 
-const CART_KEY = "brand_cart";
-
-// Some cart functions
+const CART_KEY = "brand_cart";ba
 
 function getCart() {
   try {
@@ -95,5 +92,4 @@ function showCartToast(productName) {
   setTimeout(() => toast.classList.remove("show"), 2500);
 }
 
-// Init count on every page load
 document.addEventListener("DOMContentLoaded", updateCartCount);

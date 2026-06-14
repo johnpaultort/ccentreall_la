@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — CCENTREAL</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="ccentreall.html" class="nav-logo">CCENTREAL<span></span></a>
+      <ul class="nav-links">
+        <li><a href="ccentreall.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="cart.html" class="cart-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Cart
+          <span id="cart-count">0</span>
+        </a>
+        <button class="nav-hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PRODUCT PAGE CONTENT -->
+  <div class="container product-page">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="ccentreall.html">Home</a>
+      <span>/</span>
+      <a href="shop.html">Shop</a>
+      <span>/</span>
+      <span id="breadcrumb-name">Product</span>
+    </div>
+
+    <div class="product-layout" id="product-layout">
+      <div style="aspect-ratio:4/5;background:var(--surface);border-radius:8px;"></div>
+      <div style="padding:40px 0;color:var(--text-muted)">Loading product...</div>
+    </div>
+
+    <!-- More from the drop -->
+    <div style="margin-top: 96px;">
+      <div class="section-header">
+        <h2 class="section-title">More from Drop</h2>
+        <a href="shop.html" class="btn btn-ghost">View All →</a>
+      </div>
+      <div class="product-grid" id="related-grid"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">CCENTREALL<span style="color:var(--accent)"></span></p>
+          <p class="footer-tagline">Limited drops.</p>
+        </div>
+        <div>
+          <p class="footer-col-title">Shop</p>
+          <ul class="footer-links">
+            <li><a href="shop.html">All Tees</a></li>
+            <li><a href="shop.html?filter=limited">Limited Drops</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Connect</p>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/ccentreall/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@orslorsl/video/7650570852961881357?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a></li>
+            <li><a href="oscar@ccentreall.com">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 CCENTREALL. All rights reserved.</p>
+        <p>Designed & built independently.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cart-toast"></div>
+
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get("id"));
+    const product = products.find(p => p.id === productId);
+
+    if (!product) {
+      document.getElementById("product-layout").innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:80px 0;">
+          <h2 style="font-family:var(--font-display);text-transform:uppercase;margin-bottom:16px;">Product not found</h2>
+          <a href="shop.html" class="btn btn-outline">Back to Shop</a>
+        </div>
+      `;
+    } else {
+      document.title = `${product.name} — CCENTREALL`;
+      document.getElementById("breadcrumb-name").textContent = product.name;
+
+      let selectedSize = null;
+
+      const sizeButtons = product.sizes.map(s => `
+        <button class="size-btn" data-size="${s}" onclick="selectSize('${s}')">${s}</button>
+      `).join('');
+
+      document.getElementById("product-layout").innerHTML = `
+        <div class="product-img-main">
+          <img src="${product.image}" alt="${product.name}"
+            onerror="this.parentElement.style.background='var(--surface-2)';this.style.display='none'" />
+        </div>
+        <div class="product-info">
+          <span class="product-tag">${product.tag}</span>
+          <h1 class="product-name">${product.name}</h1>
+          <p class="product-price">$${product.price}</p>
+          <p class="product-desc">${product.description}</p>
+
+          <p class="size-label">Select Size</p>
+          <div class="size-grid" id="size-grid">${sizeButtons}</div>
+
+          ${product.soldOut
+            ? `<button class="add-to-cart-btn" disabled>Sold Out</button>`
+            : `<button class="add-to-cart-btn" id="atc-btn" onclick="handleAddToCart()">
+                 Select a Size
+               </button>`
+          }
+
+          <!-- PERSONALIZE: You can add a "Buy Now" button that goes straight to your Stripe link -->
+          ${!product.soldOut && product.stripeLink !== "#" ? `
+            <a href="${product.stripeLink}" class="btn btn-dark" target="_blank">
+              Buy Now — Skip Cart
+            </a>
+          ` : ''}
+
+          <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
+            <p style="font-size:0.78rem;color:var(--text-muted);line-height:2;">
+              - &nbsp;CCENTREALL prototype 01<br />
+              - &nbsp;Limited Run<br />
+            </p>
+          </div>
+        </div>
+      `;
+
+      function selectSize(size) {
+        selectedSize = size;
+        document.querySelectorAll(".size-btn").forEach(btn => {
+          btn.classList.toggle("selected", btn.dataset.size === size);
+        });
+        const btn = document.getElementById("atc-btn");
+        if (btn) btn.textContent = `Add to Cart — ${size}`;
+      }
+
+      function handleAddToCart() {
+        if (!selectedSize) {
+          const grid = document.getElementById("size-grid");
+          grid.style.outline = `1px solid var(--accent)`;
+          setTimeout(() => grid.style.outline = '', 800);
+          return;
+        }
+        addToCart(product.id, selectedSize);
+      }
+
+      // Expose to global scope for inline onclick
+      window.selectSize = selectSize;
+      window.handleAddToCart = handleAddToCart;
+    }
+
+    // This fuctiion is created to render 4 products
+    const related = products
+      .filter(p => p.id !== productId)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4);
+
+    const relatedGrid = document.getElementById("related-grid");
+    related.forEach(p => {
+      relatedGrid.innerHTML += `
+        <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
+          <div class="card-img-wrap">
+            <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'" />
+            <span class="card-tag ${p.tag}">${p.tag}</span>
+            ${p.soldOut ? `<div class="card-sold-overlay">Sold Out</div>` : ''}
+          </div>
+          <div class="card-body">
+            <p class="card-name">${p.name}</p>
+            <p class="card-desc">${p.description}</p>
+            <p class="card-price">$${p.price}</p>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
